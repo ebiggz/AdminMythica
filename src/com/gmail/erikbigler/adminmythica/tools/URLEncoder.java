@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
  *
  * @author Thomas Morgner
  */
+
 public class URLEncoder
 {
 	private URLEncoder()
@@ -151,15 +152,12 @@ public class URLEncoder
 		return sbuf.toString();
 	}
 
-	public static String encode (final String s, final String encoding)
-			throws UnsupportedEncodingException
-			{
-		if ("utf-8".equalsIgnoreCase(encoding))
-		{
+	public static String encode (final String s, final String encoding) throws UnsupportedEncodingException {
+		if ("utf-8".equalsIgnoreCase(encoding)) {
 			return encodeUTF8(s);
 		}
 
 		return encodeBytes(s.getBytes(encoding));
-			}
+	}
 
 }

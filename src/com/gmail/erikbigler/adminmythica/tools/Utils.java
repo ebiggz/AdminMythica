@@ -7,16 +7,12 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 
 
@@ -30,7 +26,6 @@ public class Utils {
 		return key;
 	}
 
-
 	public static String sha256(String base) {
 		String key = "";
 		MessageDigest md;
@@ -39,7 +34,6 @@ public class Utils {
 			md.update(base.getBytes());
 
 			byte byteData[] = md.digest();
-
 			//convert the byte to hex format method 1
 			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < byteData.length; i++) {
@@ -87,7 +81,9 @@ public class Utils {
 	}
 
 	public static String requestDataFromServer(String methodName, String args) {
+		//create request url
 		String url = "http://mc.mythicacraft.com:20059/api/call?method=" + methodName;
+		//put args into json format, and encode to be url safe
 		if(args != null) {
 			args = "[" + args + "]";
 			url += "&args=" + URLEncoder.encodeUTF8(args);
@@ -95,6 +91,7 @@ public class Utils {
 			url += "&args=%5B%5D";
 		}
 		url += "&key=" + Utils.getKey(methodName);
+		//get reply
 		String jsonReply = "";
 		try {
 			URL u = new URL(url);

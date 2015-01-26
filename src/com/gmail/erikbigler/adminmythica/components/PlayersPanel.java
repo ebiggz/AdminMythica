@@ -81,7 +81,7 @@ public class PlayersPanel extends JPanel {
 	public JLabel currentLoc;
 
 	JPanel tools;
-	public JButton heal, teleport, pm, mute, kick;
+	public JButton heal, teleport, pm, mute, kick, store;
 	public JButton ban;
 
 	JButton refreshData;
@@ -207,13 +207,16 @@ public class PlayersPanel extends JPanel {
 		kick.addActionListener(lforButton);
 		ban = new JButton("Ban");
 		ban.addActionListener(lforButton);
+		store = new JButton("Store");
+		store.addActionListener(lforButton);
 
 		tools.add(refreshData);
 		tools.add(pm);
 		tools.add(teleport);
 		tools.add(mute);
 		tools.add(kick);
-		tools.add(ban);
+		//tools.add(ban);
+		tools.add(store);
 
 		picLabel = new JLabel();
 
@@ -486,6 +489,18 @@ public class PlayersPanel extends JPanel {
 				} else {
 					Utils.sendMethodToServer("teleport", "\"" + playerList.getSelectedValue() + "\",\"" + s + "\"");
 				}
+			} else if(e.getSource() == store) {
+				String itemName = (String)JOptionPane.showInputDialog(
+						parent,
+						"Type the name of the store item to give",
+						"Store",
+						JOptionPane.PLAIN_MESSAGE,
+						null,
+						null,
+						"");
+				if(itemName == null) return;
+				Utils.sendMethodToServer("giveStoreItem", "\"" + itemName + "\",\"" + playerList.getSelectedValue() + "\"");
+				System.out.println("Sent store item " + itemName + " to " + playerList.getSelectedValue());
 			} else if(e.getSource() == pm) {
 				String message = (String)JOptionPane.showInputDialog(
 						parent,
